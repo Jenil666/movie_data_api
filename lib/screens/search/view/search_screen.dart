@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_data_api/screens/search/controller/search_controller.dart';
 import 'package:movie_data_api/screens/search/modal/search_modal.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -32,6 +33,13 @@ class _SearchScreenState extends State<SearchScreen> {
                 textAlign: TextAlign.center,
                 controller: get.txtmovie,
                 decoration: InputDecoration(
+                  prefixIcon: IconButton(onPressed: () async {
+                    Map<Permission,PermissionStatus> status = await [
+                      Permission.location,
+                      Permission.camera,
+                      Permission.storage,
+                    ].request();
+                  }, icon: Icon(Icons.settings,color: Colors.white,)),
                     suffixIcon: IconButton(
                         onPressed: () {
                           get.movie.value = get.txtmovie.text;
